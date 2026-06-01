@@ -1,0 +1,6 @@
+{
+  "name": "Control de Acceso Portería",
+  "description": "Sistema ágil de control de accesos para portería con registro de ingresos, salidas y persistencia local.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
