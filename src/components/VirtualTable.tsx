@@ -28,8 +28,8 @@ export default function VirtualTable<T>({
 
   if (itemCount === 0) {
     return (
-      <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
-        <table className="w-full text-left border-collapse">
+      <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto w-full bg-white dark:bg-slate-900">
+        <table className="min-w-[680px] md:min-w-full text-left border-collapse">
           {header}
         </table>
         {emptyMessage}
@@ -55,10 +55,10 @@ export default function VirtualTable<T>({
     <div 
       ref={containerRef}
       onScroll={handleScroll}
-      className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-auto bg-white dark:bg-slate-900 scrollbar-thin focus:outline-hidden"
+      className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-x-auto w-full bg-white dark:bg-slate-900 scrollbar-thin focus:outline-hidden"
       style={{ maxHeight: `${viewportHeight}px`, overflowY: 'auto' }}
     >
-      <table className="w-full text-left border-collapse align-middle table-layout-fixed">
+      <table className="min-w-[680px] md:min-w-full text-left border-collapse align-middle table-layout-fixed">
         {header}
         <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
           {topSpacerHeight > 0 && (

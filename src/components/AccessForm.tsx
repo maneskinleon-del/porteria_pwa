@@ -201,26 +201,26 @@ export default function AccessForm() {
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors">
-      <div className="bg-slate-900 dark:bg-slate-950 px-5 py-4 text-white flex items-center justify-between">
+      <div className="bg-slate-900 dark:bg-slate-950 px-4 md:px-5 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <h2 className="font-bold tracking-tight text-white text-base">Registrar Acceso</h2>
         <span className="bg-blue-500/10 text-blue-400 text-[10px] font-mono px-2 py-0.5 rounded-md border border-blue-500/25">
           PORTERO ACCESO
         </span>
       </div>
 
-      <div className="p-5 space-y-5">
+      <div className="p-4 md:p-5 space-y-5">
         {/* Plantillas rápidas */}
         <div>
           <span className="text-xs font-bold text-slate-400 dark:text-slate-500 block mb-2 uppercase tracking-wider">
             Completar Rápido:
           </span>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
             {(['Visita', 'Proveedor', 'Residente', 'Contratista'] as TipoIngreso[]).map(t => (
               <button
                 key={t}
                 type="button"
                 onClick={() => handleTemplateFill(t)}
-                className="px-3 py-1.5 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-350 rounded-xl transition duration-150 active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto min-h-11 px-3 py-2 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-350 rounded-xl transition duration-150 active:scale-95 cursor-pointer"
               >
                 {t === 'Visita' && '👤 '}
                 {t === 'Proveedor' && '📦 '}
@@ -237,12 +237,12 @@ export default function AccessForm() {
           
           {/* RUT / Pasaporte */}
           <div>
-            <div className="flex justify-between items-center mb-1.5">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-1.5">
               <label htmlFor="input-rut" className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 RUT / Cédula Identidad
               </label>
               
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-xs font-bold text-slate-500 dark:text-slate-400 select-none">
+              <label className="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-500 dark:text-slate-400 select-none min-h-8">
                 <input 
                   type="checkbox" 
                   checked={isPasaporte} 
@@ -321,7 +321,7 @@ export default function AccessForm() {
 
           {/* Patente Vehicular */}
           <div>
-            <div className="flex justify-between items-center mb-1.5">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-1.5">
               <label htmlFor="input-patente" className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
                 Patente Vehículo <span className="text-slate-400 dark:text-slate-500 text-[10px] font-normal tracking-normal lowercase">(Opcional)</span>
               </label>
@@ -329,7 +329,7 @@ export default function AccessForm() {
               <button 
                 type="button"
                 onClick={() => setForm({ patente: 'Peatón' })}
-                className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                className="w-full sm:w-auto min-h-9 px-3 sm:px-0 text-left sm:text-right text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
               >
                 🚶 Es Peatón
               </button>
@@ -355,7 +355,7 @@ export default function AccessForm() {
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">
               Clasificación de Ingreso
             </span>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {(['Visita', 'Proveedor', 'Residente', 'Contratista'] as TipoIngreso[]).map((opt) => {
                 const isSelected = tipoIngreso === opt;
                 return (
@@ -363,7 +363,7 @@ export default function AccessForm() {
                     key={opt}
                     type="button"
                     onClick={() => setForm({ tipoIngreso: opt })}
-                    className={`py-3 px-4 border rounded-xl text-xs font-bold text-center transition duration-150 cursor-pointer active:scale-98 ${
+                    className={`w-full min-h-11 py-3 px-4 border rounded-xl text-sm sm:text-xs font-bold text-center transition duration-150 cursor-pointer active:scale-98 ${
                       isSelected 
                         ? 'bg-blue-600 border-blue-600 dark:border-blue-700 text-white shadow-md shadow-blue-500/20' 
                         : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
@@ -397,11 +397,11 @@ export default function AccessForm() {
         </div>
 
         {/* Acciones principales (Botones gigantes) */}
-        <div className="grid grid-cols-2 gap-3 pt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
           <button 
             type="button" 
             onClick={() => handleSubmit('INGRESO')}
-            className="bg-emerald-600 dark:bg-emerald-700 hover:bg-emerald-700 dark:hover:bg-emerald-600 cursor-pointer text-white font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/10 transition active:scale-95 text-base border-b-4 border-emerald-800"
+            className="w-full min-h-14 bg-emerald-600 dark:bg-emerald-700 hover:bg-emerald-700 dark:hover:bg-emerald-600 cursor-pointer text-white font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/10 transition active:scale-95 text-base border-b-4 border-emerald-800"
             aria-label="Registrar Ingreso de persona"
           >
             <ArrowDownLeft className="w-5 h-5 bg-emerald-500 p-0.5 rounded-full stroke-[3]" />
@@ -411,7 +411,7 @@ export default function AccessForm() {
           <button 
             type="button" 
             onClick={() => handleSubmit('SALIDA')}
-            className="bg-rose-600 dark:bg-rose-700 hover:bg-rose-700 dark:hover:bg-rose-600 cursor-pointer text-white font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-rose-500/10 transition active:scale-95 text-base border-b-4 border-rose-800"
+            className="w-full min-h-14 bg-rose-600 dark:bg-rose-700 hover:bg-rose-700 dark:hover:bg-rose-600 cursor-pointer text-white font-black py-4 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-rose-500/10 transition active:scale-95 text-base border-b-4 border-rose-800"
             aria-label="Registrar Salida de persona"
           >
             <ArrowUpRight className="w-5 h-5 bg-rose-500 p-0.5 rounded-full stroke-[3]" />

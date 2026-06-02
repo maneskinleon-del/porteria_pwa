@@ -72,9 +72,9 @@ export default function QuickAccess() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Caja de Intro */}
-      <div className="bg-gradient-to-r from-emerald-900 to-teal-950 p-5 text-white rounded-2xl shadow-lg border border-emerald-800/60 dark:border-emerald-950 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-emerald-900 to-teal-950 p-4 md:p-5 text-white rounded-2xl shadow-lg border border-emerald-800/60 dark:border-emerald-950 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
             <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-mono px-2 py-0.5 rounded border border-emerald-500/30 font-bold">
@@ -86,21 +86,21 @@ export default function QuickAccess() {
             Registra ingresos y salidas al instante con un solo toque, sin escribir nombres o RUTs. Diseñado específicamente para pantallas táctiles.
           </p>
         </div>
-        <div className="shrink-0 bg-slate-950/85 border border-emerald-500/30 px-5 py-3 rounded-2xl text-right shadow-inner">
+        <div className="w-full md:w-auto shrink-0 bg-slate-950/85 border border-emerald-500/30 px-4 md:px-5 py-3 rounded-2xl text-left md:text-right shadow-inner">
           <span className="text-[10px] text-emerald-400 block uppercase font-extrabold tracking-wider leading-none mb-1">Habituales Cargados</span>
           <span className="text-xl font-black text-white" aria-live="polite">{authorizedPeople.length} personas</span>
         </div>
       </div>
 
       {/* Barra de Filtros */}
-      <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col lg:flex-row items-center justify-between gap-4 transition-colors">
+      <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 transition-colors">
         <div className="relative w-full lg:w-80">
           <input 
             type="text" 
             value={frecuentesSearchQuery}
             onChange={(e) => setFilters({ frecuentesSearchQuery: e.target.value })}
             placeholder="Buscar habitual por nombre, RUT, patente..."
-            className="w-full text-sm pl-9 pr-8 py-2.5 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-emerald-500 focus:outline-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100"
+            className="w-full text-base sm:text-sm pl-9 pr-8 h-11 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-emerald-500 focus:outline-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100"
           />
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
             <Search className="w-4 h-4" />
@@ -108,7 +108,7 @@ export default function QuickAccess() {
           {frecuentesSearchQuery && (
             <button 
               onClick={() => setFilters({ frecuentesSearchQuery: '' })}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700 bg-transparent cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 min-h-8 min-w-8 text-xs text-slate-400 hover:text-slate-700 bg-transparent cursor-pointer"
             >
               ✕
             </button>
@@ -116,10 +116,10 @@ export default function QuickAccess() {
         </div>
 
         {/* Categorías */}
-        <div className="flex flex-wrap gap-1.5 w-full lg:w-auto">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 w-full lg:w-auto">
           <button
             onClick={() => setFilters({ frecuentesClassFilter: 'TODOS' })}
-            className={`px-3 py-2 text-xs font-bold rounded-xl cursor-pointer transition active:scale-95 ${
+            className={`w-full sm:w-auto min-h-11 px-3 py-2 text-xs font-bold rounded-xl cursor-pointer transition active:scale-95 ${
               frecuentesClassFilter === 'TODOS'
                 ? 'bg-slate-800 dark:bg-slate-700 text-white'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-650 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -131,7 +131,7 @@ export default function QuickAccess() {
             <button
               key={t}
               onClick={() => setFilters({ frecuentesClassFilter: t })}
-              className={`px-3 py-2 text-xs font-bold rounded-xl cursor-pointer transition active:scale-95 ${
+              className={`w-full sm:w-auto min-h-11 px-3 py-2 text-xs font-bold rounded-xl cursor-pointer transition active:scale-95 ${
                 frecuentesClassFilter === t
                   ? 'bg-blue-600 dark:bg-blue-700 text-white shadow-md shadow-blue-500/10'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-650 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -148,9 +148,9 @@ export default function QuickAccess() {
       </div>
 
       {/* Grid de Tarjetas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {filteredFrecuentes.length === 0 ? (
-          <div className="col-span-full bg-white dark:bg-slate-900 p-12 text-center border border-slate-200 dark:border-slate-800 rounded-2xl transition-colors">
+          <div className="col-span-full bg-white dark:bg-slate-900 p-6 md:p-12 text-center border border-slate-200 dark:border-slate-800 rounded-2xl transition-colors">
             <Users className="w-10 h-10 text-slate-350 dark:text-slate-700 mx-auto mb-3" />
             <p className="font-bold text-slate-600 dark:text-slate-300 text-sm">No se encontraron personas habituales</p>
             <p className="text-xs text-slate-400 dark:text-slate-550 mt-1">
@@ -181,7 +181,7 @@ export default function QuickAccess() {
             return (
               <div 
                 key={person.rut + i}
-                className={`bg-white dark:bg-slate-900 border text-left p-4 rounded-2xl flex flex-col justify-between h-48 transition-all duration-200 shadow-xs hover:shadow-md ${
+                className={`bg-white dark:bg-slate-900 border text-left p-4 md:p-5 rounded-2xl flex flex-col justify-between min-h-48 transition-all duration-200 shadow-xs hover:shadow-md ${
                   isInside 
                     ? 'border-emerald-400 dark:border-emerald-800 ring-2 ring-emerald-500/10 dark:ring-emerald-500/5' 
                     : 'border-slate-200 dark:border-slate-800'
@@ -203,7 +203,7 @@ export default function QuickAccess() {
 
                   <div>
                     <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm line-clamp-1 leading-snug">{person.nombre}</h4>
-                    <div className="flex items-center gap-2 mt-1.5">
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
                       <span className="font-mono text-[11px] font-extrabold text-slate-550 dark:text-slate-400 leading-none">{person.rut}</span>
                       {person.patente && person.patente !== 'Peatón' && (
                         <span className="font-mono text-[10px] bg-yellow-50 dark:bg-yellow-950/20 text-slate-800 dark:text-yellow-450 border border-yellow-200 dark:border-yellow-900/40 px-1.5 py-0.5 rounded font-bold leading-none">
@@ -218,7 +218,7 @@ export default function QuickAccess() {
                 <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800 shrink-0">
                   <button
                     onClick={() => handleQuickLog(person, 'INGRESO')}
-                    className="py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer select-none shadow-xs active:scale-95 transition-all border-b-2 border-emerald-800"
+                    className="min-h-11 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer select-none shadow-xs active:scale-95 transition-all border-b-2 border-emerald-800"
                     aria-label={`Registrar ingreso para ${person.nombre}`}
                   >
                     <ArrowDownLeft className="w-3.5 h-3.5" />
@@ -227,7 +227,7 @@ export default function QuickAccess() {
 
                   <button
                     onClick={() => handleQuickLog(person, 'SALIDA')}
-                    className="py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1 bg-rose-600 hover:bg-rose-700 text-white cursor-pointer select-none shadow-xs active:scale-95 transition-all border-b-2 border-rose-800"
+                    className="min-h-11 py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1 bg-rose-600 hover:bg-rose-700 text-white cursor-pointer select-none shadow-xs active:scale-95 transition-all border-b-2 border-rose-800"
                     aria-label={`Registrar salida para ${person.nombre}`}
                   >
                     <ArrowUpRight className="w-3.5 h-3.5" />

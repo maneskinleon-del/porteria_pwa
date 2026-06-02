@@ -77,7 +77,7 @@ export default function JsonImporter() {
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-      <div className="bg-slate-900 dark:bg-slate-950 text-white p-5 flex items-center gap-3">
+      <div className="bg-slate-900 dark:bg-slate-950 text-white p-4 md:p-5 flex items-start sm:items-center gap-3">
         <UploadCloud className="w-6 h-6 text-blue-400" />
         <div>
           <h3 className="text-lg font-bold">Importador de Autorizados</h3>
@@ -85,9 +85,9 @@ export default function JsonImporter() {
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         <div 
-          className={`border-2 border-dashed rounded-xl p-10 text-center transition-colors cursor-pointer ${
+          className={`border-2 border-dashed rounded-xl p-6 md:p-10 min-h-48 flex flex-col items-center justify-center text-center transition-colors cursor-pointer ${
             dragActive ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/50'
           }`}
           onDragEnter={handleDrag}

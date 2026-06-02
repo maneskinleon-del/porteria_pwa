@@ -85,12 +85,12 @@ export default function LogsTable() {
   const tableHeader = (
     <thead>
       <tr className="bg-slate-100/80 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-        <th className="py-3 px-4 w-28">Fecha • Hora</th>
-        <th className="py-3 px-4 w-32">Clasificación</th>
-        <th className="py-3 px-4">Identificación</th>
-        <th className="py-3 px-4 w-28">Vehículo</th>
-        <th className="py-3 px-4 w-28 text-center">Movimiento</th>
-        <th className="py-3 px-4 w-36 text-right">Acción</th>
+        <th className="py-2 px-2 md:py-3 md:px-4 w-24 md:w-28">Fecha • Hora</th>
+        <th className="hidden md:table-cell py-3 px-4 w-32">Clasificación</th>
+        <th className="py-2 px-2 md:py-3 md:px-4">Identificación</th>
+        <th className="hidden md:table-cell py-3 px-4 w-28">Vehículo</th>
+        <th className="py-2 px-2 md:py-3 md:px-4 w-24 md:w-28 text-center">Movimiento</th>
+        <th className="py-2 px-2 md:py-3 md:px-4 w-28 md:w-36 text-right">Acción</th>
       </tr>
     </thead>
   );
@@ -141,19 +141,19 @@ export default function LogsTable() {
       <tr key={reg.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-850/40 transition group text-slate-700 dark:text-slate-350">
         
         {/* Timestamp */}
-        <td className="py-3 px-4 font-mono text-[11px] text-slate-500 dark:text-slate-450 leading-tight">
+        <td className="py-2 px-2 md:py-3 md:px-4 font-mono text-[11px] text-slate-500 dark:text-slate-450 leading-tight">
           {reg.timestamp.split(' ').map((term, i) => (
             <span key={i} className="block whitespace-nowrap">{term}</span>
           ))}
         </td>
 
         {/* Classification */}
-        <td className="py-3 px-4">
+        <td className="hidden md:table-cell py-3 px-4">
           {isEditingThis ? (
             <select 
               value={editEditTipoIngreso} 
               onChange={(e) => setEditFields({ editEditTipoIngreso: e.target.value as TipoIngreso })}
-              className="text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 p-1.5 rounded-lg font-bold text-slate-800 dark:text-slate-100"
+              className="w-full h-9 text-xs bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-2 rounded-lg font-bold text-slate-800 dark:text-slate-100"
             >
               <option value="Visita">Visita</option>
               <option value="Proveedor">Proveedor</option>
@@ -168,9 +168,12 @@ export default function LogsTable() {
         </td>
 
         {/* Identity & Name */}
-        <td className="py-3 px-4">
-          <div className="flex items-center gap-1.5">
+        <td className="py-2 px-2 md:py-3 md:px-4">
+          <div className="flex flex-wrap items-center gap-1.5">
             <span className="font-mono font-extrabold text-xs text-slate-900 dark:text-slate-200">{reg.rut}</span>
+            <span className={`md:hidden inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${badgeTipoColor}`}>
+              {reg.tipoIngreso}
+            </span>
             {isPersonAuthorized && (
               <span className="text-[9px] bg-blue-500/10 dark:bg-blue-450/10 text-blue-700 dark:text-blue-400 font-bold px-1 rounded-sm border border-blue-450/20">
                 Autorizado
@@ -178,7 +181,7 @@ export default function LogsTable() {
             )}
             <button 
               onClick={() => copyToClipboard(reg.rut)}
-              className="text-slate-400 hover:text-blue-500 p-0.5 transition cursor-pointer"
+              className="text-slate-400 hover:text-blue-500 p-1.5 -m-1 transition cursor-pointer"
               title="Copiar RUT"
               aria-label={`Copiar RUT ${reg.rut}`}
             >
@@ -191,21 +194,30 @@ export default function LogsTable() {
               type="text" 
               value={editNombre} 
               onChange={(e) => setEditFields({ editNombre: e.target.value })}
-              className="text-xs bg-white dark:bg-slate-800 border border-slate-350 dark:border-slate-700 p-1.5 w-full max-w-xs rounded-lg font-semibold mt-1 text-slate-800 dark:text-slate-100"
+              className="text-base md:text-xs bg-white dark:bg-slate-800 border border-slate-350 dark:border-slate-700 px-2 h-10 w-full max-w-xs rounded-lg font-semibold mt-1 text-slate-800 dark:text-slate-100"
             />
           ) : (
             <div className="text-xs text-slate-500 dark:text-slate-450 font-semibold truncate max-w-xs">{reg.nombre}</div>
           )}
+          <div className="md:hidden mt-1">
+            <span className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded leading-normal ${
+              reg.patente === 'Peatón'
+                ? 'text-slate-400 dark:text-slate-600 italic bg-slate-50 dark:bg-slate-900/30'
+                : 'bg-yellow-50 dark:bg-yellow-950/20 text-slate-850 dark:text-yellow-400 border border-yellow-250 dark:border-yellow-900/40'
+            }`}>
+              {reg.patente}
+            </span>
+          </div>
         </td>
 
         {/* Plate */}
-        <td className="py-3 px-4">
+        <td className="hidden md:table-cell py-3 px-4">
           {isEditingThis ? (
             <input 
               type="text" 
               value={editPatente} 
               onChange={(e) => setEditFields({ editPatente: e.target.value })}
-              className="text-xs font-mono font-bold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 p-1.5 w-24 rounded-lg mt-1 uppercase text-slate-800 dark:text-slate-100"
+              className="text-xs font-mono font-bold bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-2 h-9 w-24 rounded-lg mt-1 uppercase text-slate-800 dark:text-slate-100"
             />
           ) : (
             <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded leading-normal ${
@@ -219,7 +231,7 @@ export default function LogsTable() {
         </td>
 
         {/* Movement */}
-        <td className="py-3 px-4 text-center">
+        <td className="py-2 px-2 md:py-3 md:px-4 text-center">
           <span className={`inline-flex items-center text-[10px] font-black tracking-wider px-2 py-1 rounded-lg ${
             isIngreso 
               ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-400' 
@@ -230,13 +242,13 @@ export default function LogsTable() {
         </td>
 
         {/* Control actions */}
-        <td className="py-3 px-4 text-right">
+        <td className="py-2 px-2 md:py-3 md:px-4 text-right">
           <div className="flex items-center justify-end gap-1.5">
             
             {isIngreso && isCurrentlyInside && (
               <button
                 onClick={() => handleQuickCheckout(reg)}
-                className="bg-orange-600 dark:bg-orange-700 hover:bg-orange-700 dark:hover:bg-orange-650 cursor-pointer text-white font-bold text-[10px] px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition active:scale-95 shrink-0"
+                className="bg-orange-600 dark:bg-orange-700 hover:bg-orange-700 dark:hover:bg-orange-650 cursor-pointer text-white font-bold text-[10px] px-2.5 min-h-9 rounded-lg flex items-center gap-1 shadow-sm transition active:scale-95 shrink-0"
                 title="Registrar salida automática de esta persona con la hora actual"
                 aria-label="Registrar salida rápida"
               >
@@ -249,7 +261,7 @@ export default function LogsTable() {
               <div className="flex items-center gap-1 shrink-0">
                 <button 
                   onClick={() => handleSaveEdit(reg.id)}
-                  className="p-1.5 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer"
+                  className="min-h-9 min-w-9 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer inline-flex items-center justify-center"
                   title="Guardar cambios"
                   aria-label="Confirmar edición"
                 >
@@ -257,7 +269,7 @@ export default function LogsTable() {
                 </button>
                 <button 
                   onClick={() => setEditing(null)}
-                  className="p-1.5 px-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs hover:bg-slate-300 dark:hover:bg-slate-700 cursor-pointer"
+                  className="min-h-9 min-w-9 px-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs hover:bg-slate-300 dark:hover:bg-slate-700 cursor-pointer inline-flex items-center justify-center"
                   title="Cancelar cambios"
                   aria-label="Cancelar edición"
                 >
@@ -268,7 +280,7 @@ export default function LogsTable() {
               <div className="flex items-center gap-1 opacity-100 sm:opacity-40 group-hover:opacity-100 transition duration-150">
                 <button 
                   onClick={() => setEditing(reg.id, reg.nombre, reg.patente, reg.tipoIngreso)}
-                  className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 min-h-9 min-w-9 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer inline-flex items-center justify-center"
                   title="Editar fila"
                   aria-label="Editar registro"
                 >
@@ -281,7 +293,7 @@ export default function LogsTable() {
                       triggerToast(`🗑️ Registro de ${reg.nombre} eliminado.`);
                     }
                   }}
-                  className="text-rose-450 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/20 cursor-pointer"
+                  className="text-rose-450 hover:text-rose-600 min-h-9 min-w-9 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/20 cursor-pointer inline-flex items-center justify-center"
                   title="Eliminar fila"
                   aria-label="Eliminar registro"
                 >
@@ -301,7 +313,7 @@ export default function LogsTable() {
     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors">
       
       {/* Cabecera / Buscador */}
-      <div className="bg-slate-50 dark:bg-slate-950 px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bg-slate-50 dark:bg-slate-950 px-4 md:px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h3 className="font-bold text-slate-850 dark:text-slate-150 text-sm flex items-center gap-2">
             <FileText className="w-4.5 h-4.5 text-slate-500" />
@@ -310,13 +322,13 @@ export default function LogsTable() {
           <p className="text-xs text-slate-500 dark:text-slate-400">Últimos movimientos cargados desde IndexedDB</p>
         </div>
 
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <input 
             type="text" 
             value={searchQuery}
             onChange={(e) => setFilters({ searchQuery: e.target.value })}
             placeholder="Buscar por RUT, nombre o patente..."
-            className="text-xs pl-8 pr-12 py-2 border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-900 w-full sm:w-64 text-slate-800 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+            className="text-base sm:text-xs pl-8 pr-16 sm:pr-12 h-11 sm:h-10 border border-slate-300 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-900 w-full sm:w-64 text-slate-800 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
           />
           <div className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400">
             <Search className="w-3.5 h-3.5" />
