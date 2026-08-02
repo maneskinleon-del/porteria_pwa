@@ -20,12 +20,12 @@ import ExportPanel from './components/ExportPanel';
 import JsonImporter from './components/JsonImporter';
 
 function Toast() {
-  const { toast, clearToast } = useUIStore();
-  if (!toast) return null;
+  const { toastMessage, clearToast } = useUIStore();
+  if (!toastMessage) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 bg-slate-900 dark:bg-slate-800 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 animate-in fade-in slide-in-from-bottom-5">
-      <span className="font-medium text-sm">{toast.message}</span>
+      <span className="font-medium text-sm">{toastMessage}</span>
       <button onClick={clearToast} className="text-slate-400 hover:text-white transition">
         <X className="w-4 h-4" />
       </button>
@@ -94,15 +94,15 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation Tabs */}
         <div className="flex overflow-x-auto pb-4 mb-6 hide-scrollbar gap-2">
-          {[
-            { id: 'INGRESO', label: 'Control', icon: <LayoutDashboard className="w-4 h-4" /> },
-            { id: 'BITACORA', label: 'Bitácora', icon: <Database className="w-4 h-4" /> },
-            { id: 'EXPORTAR', label: 'Dashboard', icon: <BarChart className="w-4 h-4" /> },
-            { id: 'IMPORTAR', label: 'Ajustes BD', icon: <Users className="w-4 h-4" /> },
-          ].map(tab => (
+          {([
+            { id: 'registro', label: 'Control', icon: <LayoutDashboard className="w-4 h-4" /> },
+            { id: 'frecuentes', label: 'Bitácora', icon: <Database className="w-4 h-4" /> },
+            { id: 'exportar', label: 'Dashboard', icon: <BarChart className="w-4 h-4" /> },
+            { id: 'importar', label: 'Ajustes BD', icon: <Users className="w-4 h-4" /> },
+          ] as const).map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all ${
                 activeTab === tab.id 
                   ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20' 
@@ -117,7 +117,7 @@ export default function App() {
 
         {/* Tab Content */}
         <div className="animate-in fade-in duration-300">
-          {activeTab === 'INGRESO' && (
+          {activeTab === 'registro' && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               <div className="lg:col-span-4">
                 <AccessForm />
@@ -128,15 +128,15 @@ export default function App() {
             </div>
           )}
 
-          {activeTab === 'BITACORA' && (
+          {activeTab === 'frecuentes' && (
             <LogsTable />
           )}
 
-          {activeTab === 'EXPORTAR' && (
+          {activeTab === 'exportar' && (
             <ExportPanel />
           )}
 
-          {activeTab === 'IMPORTAR' && (
+          {activeTab === 'importar' && (
             <div className="max-w-3xl">
               <JsonImporter />
             </div>
